@@ -1,0 +1,45 @@
+---
+{% raw %}
+- hosts: all
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: Create a directory for django project.
+    file: state=directory path={{repository_root}}
+
+  - name: Create a virtualenv directory in django apps directory.
+    file: state=directory path={{venv_path}}
+
+  - name: Install required system packages.
+    apt: pkg={{item}} state=installed update-cache=yes
+    with_items: system_packages
+
+  - name: Install easy_install packages
+    easy_install: name={{item}}
+    with_items: easy_install_packages
+
+  - name: Install Python Packages
+    pip: name={{item}} virtualenv={{venv_path}}
+    with_items: python_packages
+  
+  - name: Copy project files into apps root
+    copy: src=../ dest={{repository_root}}
+
+  - name: Install project requirements
+    pip: requirements={{repository_root}}/requirements/{{settings}}.txt virtualenv={{venv_path}}
+
+  - name: Sync database
+    django_manage: app_path={{project_root}} command=syncdb virtualenv={{venv_path}} settings={{project_name}}.config.settings
+
+  - name: copy nginx configuration file
+    copy: src=conf/nginx.conf dest=/etc/nginx/sites-enabled/
+    notify: restart nginx
+
+  - name: copy gunicorn configuration
+    copy: src=conf/gunicorn_init.conf dest=/etc/init
+    notify: restart gunicorn
+
+  handlers:
+    - include: handlers.yml
+{% endraw %}

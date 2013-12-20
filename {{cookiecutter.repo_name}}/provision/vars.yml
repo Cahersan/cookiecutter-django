@@ -1,0 +1,32 @@
+---
+apps_root: /webapps
+project_name: "{{cookiecutter.project_name}}"
+repo_name: "{{cookiecutter.repo_name}}"
+{% raw %}
+repository_root: "{{apps_root}}/{{repo_name}}"
+project_root: "{{repository_root}}/{{project_name}}"
+configuration_root: "{{project_root}}/{{project_name}}"
+venv_path: "{{apps_root}}/.virtualenvs/{{project_name}}"
+settings: production
+system_packages:
+  - build-essential
+  - vim
+  - tree
+  - git
+  - libpq-dev
+  - python-dev
+  - postgresql
+  - postgresql-contrib
+  - nginx
+  - python-setuptools
+  - libevent-dev
+easy_install_packages:
+  - virtualenv
+  - pip
+  - psycopg2
+python_packages:
+  - django 
+  - gunicorn
+  - psycopg2
+  - uwsgi
+{% endraw %}
