@@ -35,10 +35,10 @@
     when: pg_file.changed
 
   - name: Create postgreSQL database
-    postgresql_db: name={{db_name}}
+    postgresql_db: name="{{db_name}}"
 
   - name: Create postgreSQL user
-    postgresql_user: db={{db_name}} name={{db_user}} password={{db_pass}} priv=ALL
+    postgresql_user: db="{{db_name}}" name="{{db_user}}" password="{{db_pass}}" priv=ALL
 
   - name: Sync database
     django_manage: app_path={{project_root}} command=syncdb virtualenv={{venv_path}}
