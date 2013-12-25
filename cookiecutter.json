@@ -1,10 +1,10 @@
 {
-    "project_name": "test_project",
-    "repo_name":"test_repo",
-    "author_name": "carlos",
-    "email": "cahersan@gmail.com",
-    "password": "password",
-    "description": "test project",
+    "project_name": "project_name",
+    "repo_name":"repo_name",
+    "author_name": "Your Name",
+    "email": "Your email",
+    "password": "your_password",
+    "description": "A short description of the project.",
     "year": "2013",
     "domain_name": "example.com",
     "version": "0.1.0"
