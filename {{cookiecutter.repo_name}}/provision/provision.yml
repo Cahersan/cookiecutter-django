@@ -5,10 +5,7 @@
     - vars.yml
 
   tasks:
-  - name: Create a directory for django project.
-    file: state=directory path={{repository_root}}
-
-  - name: Create a virtualenv directory in django apps directory.
+  - name: Create a virtualenv directory 
     file: state=directory path={{venv_path}}
 
   - name: Install required system packages.
@@ -22,9 +19,6 @@
   - name: Install Python Packages
     pip: name={{item}} virtualenv={{venv_path}}
     with_items: python_packages
-  
-  - name: Copy project files into apps root
-    copy: src=../ dest={{repository_root}}
   
   - name: Install project as python package
     pip: name={{repository_root}} virtualenv={{venv_path}}
@@ -53,7 +47,7 @@
     copy: src=conf/nginx.conf dest=/etc/nginx/sites-enabled/
     notify: restart nginx
  
-  - name: copy uwsgi initialization script
+  - name: copy uwsgi configuration file
     copy: src=conf/uwsgi.ini dest=/etc/init
     notify: restart uwsgi
 
