@@ -3,6 +3,7 @@
     "repo_name":"test_repo",
     "author_name": "carlos",
     "email": "cahersan@gmail.com",
+    "password": "password",
     "description": "test project",
     "year": "2013",
     "domain_name": "example.com",

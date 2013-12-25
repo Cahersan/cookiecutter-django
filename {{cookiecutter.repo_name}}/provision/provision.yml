@@ -25,20 +25,41 @@
   
   - name: Copy project files into apps root
     copy: src=../ dest={{repository_root}}
+  
+  - name: Install project as python package
+    pip: name={{repository_root}} virtualenv={{venv_path}}
 
   - name: Install project requirements
     pip: requirements={{repository_root}}/requirements/{{settings}}.txt virtualenv={{venv_path}}
 
-  - name: Sync database
-    django_manage: app_path={{project_root}} command=syncdb virtualenv={{venv_path}} settings={{project_name}}.config.settings
+  - name: setup pg_hba file
+    copy: src=conf/pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf owner=postgres group=postgres mode=0640
+    register: pg_file
 
+  - name: reload postgres if it changed
+    service: name=postgresql state=reloaded enabled=yes
+    when: pg_file.changed
+
+  - name: Create postgreSQL database
+    postgresql_db: name={{db_name}}
+
+  - name: Create postgreSQL user
+    postgresql_user: db={{db_name}} name={{db_user}} password={{db_pass}} priv=ALL
+
+  - name: Sync database
+    django_manage: app_path={{project_root}} command=syncdb virtualenv={{venv_path}}
+    
   - name: copy nginx configuration file
     copy: src=conf/nginx.conf dest=/etc/nginx/sites-enabled/
     notify: restart nginx
+ 
+  - name: copy uwsgi initialization script
+    copy: src=conf/uwsgi.ini dest=/etc/init
+    notify: restart uwsgi
 
-  - name: copy gunicorn configuration
-    copy: src=conf/gunicorn_init.conf dest=/etc/init
-    notify: restart gunicorn
+  - name: copy uwsgi initialization script
+    copy: src=conf/uwsgi_init.conf dest=/etc/init
+    notify: restart uwsgi
 
   handlers:
     - include: handlers.yml

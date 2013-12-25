@@ -2,12 +2,15 @@
 apps_root: /webapps
 project_name: "{{cookiecutter.project_name}}"
 repo_name: "{{cookiecutter.repo_name}}"
+db_name: "{{cookiecutter.project_name}}"
+db_user: "{{cookiecutter.author_name}}"
+db_pass: "{{cookiecutter.password}}"
 {% raw %}
 repository_root: "{{apps_root}}/{{repo_name}}"
 project_root: "{{repository_root}}/{{project_name}}"
 configuration_root: "{{project_root}}/{{project_name}}"
 venv_path: "{{apps_root}}/.virtualenvs/{{project_name}}"
-settings: production
+settings: local
 system_packages:
   - build-essential
   - vim
@@ -20,13 +23,13 @@ system_packages:
   - nginx
   - python-setuptools
   - libevent-dev
+  - uwsgi
 easy_install_packages:
   - virtualenv
   - pip
   - psycopg2
 python_packages:
   - django 
-  - gunicorn
   - psycopg2
   - uwsgi
 {% endraw %}

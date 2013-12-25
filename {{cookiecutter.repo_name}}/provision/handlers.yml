@@ -3,6 +3,6 @@
   service: name=nginx state=restarted
   sudo_user: root
 
-- name: restart gunicorn
-  service: name=gunicorn_init state=restarted
+- name: restart uwsgi
+  service: name=uwsgi_init state=restarted
   sudo_user: root
