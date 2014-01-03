@@ -55,7 +55,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Provision with Ansible. Change path to playbook accordingly.
   config.vm.provision "ansible" do |ansible|
       ansible.playbook = "provision/provision.yml"
-  #   ansible.inventory_path = "provision/hosts"
       ansible.sudo = true
       ansible.verbose = 'v'
   end

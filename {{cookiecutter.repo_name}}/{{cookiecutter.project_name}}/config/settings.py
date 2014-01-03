@@ -117,7 +117,7 @@ class Common(Configuration):
 
     ########## DATABASE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-    DATABASES = values.DatabaseURLValue('postgres://{{cookiecutter.author_name}}:{{cookiecutter.password}}@localhost/{{cookiecutter.project_name}}')
+    DATABASES = values.DatabaseURLValue('postgres://{{cookiecutter.author_name}}:CHANGEME@localhost/{{cookiecutter.project_name}}')
     ########## END DATABASE CONFIGURATION
 
     ########## CACHING
