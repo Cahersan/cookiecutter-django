@@ -3,7 +3,6 @@ project_name: "{{cookiecutter.project_name}}"
 repo_name: "{{cookiecutter.repo_name}}"
 db_name: "{{cookiecutter.project_name}}"
 db_user: "{{cookiecutter.author_name}}"
-db_pass: "{{cookiecutter.password}}"
 {% raw %}
 repository_root: /vagrant 
 project_root: "{{repository_root}}/{{project_name}}"
@@ -13,19 +12,15 @@ settings: local
 system_packages:
   - build-essential
   - vim
-  - tree
   - git
-  - libpq-dev
+  - python-software-properties
   - python-dev
+  - libpq-dev
   - postgresql
   - postgresql-contrib
   - nginx
-  - python-setuptools
   - libevent-dev
-easy_install_packages:
+pip_packages:
   - virtualenv
-  - pip
   - psycopg2
-python_packages:
-  - uwsgi
 {% endraw %}
