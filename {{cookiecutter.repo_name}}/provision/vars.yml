@@ -7,7 +7,7 @@ db_user: "{{cookiecutter.author_name}}"
 repository_root: /vagrant 
 project_root: "{{repository_root}}/{{project_name}}"
 configuration_root: "{{project_root}}/{{project_name}}"
-venv_path: "~/.venvs/{{project_name}}"
+venv_path: "/home/vagrant/.venvs/{{project_name}}"
 settings: local
 system_packages:
   - build-essential
