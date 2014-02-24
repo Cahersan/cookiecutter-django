@@ -16,10 +16,11 @@
     apt_repository: repo="deb http://ppa.launchpad.net/fkrull/deadsnakes/ubuntu precise main"
   
   - name: Install Python 3.3 
-    apt: pkg=python3.3 update-cache=yes force=yes
+    apt: pkg={{item}} update-cache=yes force=yes
+    with_items: python_packages
 
   - name: Install setuptools
-    shell: "wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | sudo python"
+    shell: "wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | sudo python3.3"
 
   - name: Install pip
     easy_install: name=pip
@@ -32,7 +33,7 @@
     pip: name={{repository_root}} virtualenv={{venv_path}}
 
   - name: Install project requirements
-    pip: requirements={{repository_root}}/requirements/{{settings}}.txt virtualenv={{venv_path}}
+    pip: requirements={{repository_root}}/requirements/{{settings}}.txt virtualenv={{venv_path}} virtualenv_command="virtualenv -p /usr/bin/python3.3"
 
   - name: Setup pg_hba file
     copy: src=conf/pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf owner=postgres group=postgres mode=0640
